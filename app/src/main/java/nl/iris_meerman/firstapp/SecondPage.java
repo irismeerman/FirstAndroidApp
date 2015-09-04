@@ -4,51 +4,51 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import org.w3c.dom.Text;
 
+public class SecondPage extends AppCompatActivity implements View.OnClickListener {
 
-    Button button1;
-    EditText pname;
-    TextView mText;
+    Button button2;
     String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        button1 = (Button)findViewById(R.id.button1);
-        button1.setOnClickListener(this);
-    }
+        setContentView(R.layout.activity_second_page);
 
-    private void button1Click(){
-        pname   = (EditText)findViewById(R.id.personName);
-        name = pname.getText().toString();
+        Bundle extras = getIntent().getExtras();
+        name = extras.getString("person");
 
-        Intent intent = new Intent(this, SecondPage.class);
-        intent.putExtra("person", name);
-        startActivity(intent);
+        TextView t = (TextView) findViewById(R.id.textView1);
+        t.setText("Welcome " + name);
+
+        button2 = (Button)findViewById(R.id.button2);
+        button2.setOnClickListener(this);
 
     }
 
     // If a button is clicked, refer to the right action:
     public void onClick(View v){
         switch (v.getId()){
-            case R.id.button1:
-                button1Click();
+            case R.id.button2:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_second_page, menu);
         return true;
     }
 
@@ -66,5 +66,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
 }
